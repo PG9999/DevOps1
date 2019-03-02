@@ -17,6 +17,8 @@ plugins {
 
     // Apply the application plugin to add support for building an application
     id 'application'
+
+    id 'maven-publish'
 }
 
 repositories {
@@ -54,15 +56,15 @@ dependencies {
 }
 
 
-//publishing {
+publishing {
 
-//	publications {
+	publications {
 
-//		mavenJava(mavenPublication) {
-//		 from App.java
-//		 }
-//	}
-//}
+		mavenJava(MavenPublication) {
+		 from components.java
+		 }
+	}
+}
 
 artifactory 
 {
@@ -75,7 +77,14 @@ username='${artifactory_user}'
 password='${artifactory_password}'
 
 }
+defaults{
 
+publications('mavenJava')
+publishArtifacts = true
+properties = ['qa.level': 'basic', 'dev.team': 'core']
+publishPom = true
+
+}
 }
 
 }
